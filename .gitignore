@@ -11,6 +11,7 @@ Thumbs.db
 *.key
 # Generated files
 build/
+build-*/
 cmake-build-*/
 output/
 results/

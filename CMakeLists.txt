@@ -7,3 +7,14 @@ add_executable(curves_and_clipping src/curves_and_clipping.cpp)
 add_executable(polygon_union src/polygon_union.cpp)
 target_link_libraries(curves_and_clipping PRIVATE PNG::PNG)
 target_link_libraries(polygon_union PRIVATE PNG::PNG)
+
+include(CTest)
+if(BUILD_TESTING)
+    find_package(Python3 3.8 COMPONENTS Interpreter QUIET)
+    if(Python3_Interpreter_FOUND)
+        add_test(NAME png_output_smoke
+            COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/smoke_test.py
+                --build-dir $<TARGET_FILE_DIR:curves_and_clipping>)
+        set_tests_properties(png_output_smoke PROPERTIES TIMEOUT 90)
+    endif()
+endif()
